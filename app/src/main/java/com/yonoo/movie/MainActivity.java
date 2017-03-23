@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                     String event = text.substring(start, end-1);
                     System.out.println("event  "+event);
-
+//
 //                    System.out.println(text);
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
