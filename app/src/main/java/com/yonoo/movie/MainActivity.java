@@ -3,15 +3,23 @@ package com.yonoo.movie;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -22,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     String text="";
     String event="";
     int start,end;
+    ArrayList<String> descriptionKeyList = new ArrayList<>();
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +62,29 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("시작"+start);
                     System.out.println("끝"+end);
 
-                    String event = text.substring(start, end-1);
+                    event = text.substring(start+16, end-17);
                     System.out.println("event  "+event);
-//
-//                    System.out.println(text);
+                    String jsonData = "{"+"\"jsonData\""+":"+event+"}";
+
+                    try
+                    {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        String descriptionValue = jsonObject.getString("description");
+                        JSONObject descriptionObject = new JSONObject(descriptionValue);
+                        Iterator i = descriptionObject.keys();
+                        while(i.hasNext())
+                        {
+                            String b = i.next().toString();
+                            Log.d("ITPangpang",b);
+                            descriptionKeyList.add(b);
+                        }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println(jsonData);
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
                 }
@@ -64,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv.setText(text.substring(start, end-1));
+                            tv.setText(event);
                         }
                     });
                 } catch (Exception e) {
@@ -74,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         });
         t.start(); // 쓰레드 시작
     }
+
 
 
 }
