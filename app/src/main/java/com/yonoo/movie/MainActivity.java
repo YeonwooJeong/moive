@@ -22,6 +22,7 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -70,6 +71,19 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray array = new JSONArray(eventArray); //[]
                         list_cnt=array.length();
                         System.out.println("list_cnt "+list_cnt);
+
+                        String[] getDescription=new String[list_cnt];
+                        String[] getLink=new String[list_cnt];
+
+                        for(int i=0;i<list_cnt;i++){
+
+                            JSONObject jsonObject=array.getJSONObject(i);
+                            Log.e("JSON Object",jsonObject+"");
+                            getDescription[i]=jsonObject.getString("description");
+                            getLink[i]=jsonObject.getString("link");
+                            Log.e("JsonParsing",getDescription[i]+","+getLink[i]);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
