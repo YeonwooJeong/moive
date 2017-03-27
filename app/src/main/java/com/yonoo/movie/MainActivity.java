@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,8 +18,6 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -34,13 +29,40 @@ public class MainActivity extends AppCompatActivity {
     String eventArray ="";
     int start,end,list_cnt;
     ArrayList<String> descriptionKeyList = new ArrayList<>();
-    Event eventJson = new Event();
+    private ListView listview ;
+    private ListViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        // Adapter 생성
+//        adapter = new ListViewAdapter() ;
+//
+//        // 리스트뷰 참조 및 Adapter달기
+//        listview = (ListView) findViewById(R.id.listview1);
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView parent, View v, int position, long id) {
+//                // get item
+//                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+//
+//                String titleStr = item.getTitle() ;
+//                Drawable iconDrawable = item.getIcon() ;
+//
+//                // TODO : use item data.
+//            }
+//        }) ;
 
+
+//        // 첫 번째 아이템 추가.
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_box_black_36dp),
+//                "Box", "Account Box Black 36dp") ;
+//        // 두 번째 아이템 추가.
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black_36dp),
+//                "Circle", "Account Circle Black 36dp") ;
 
         tv = (TextView)findViewById(R.id.textView1);
         Button b = (Button)findViewById(R.id.button1);
@@ -74,14 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
                         String[] getDescription=new String[list_cnt];
                         String[] getLink=new String[list_cnt];
+                        String[] getImageUrl=new String[list_cnt];
 
                         for(int i=0;i<list_cnt;i++){
 
                             JSONObject jsonObject=array.getJSONObject(i);
-                            Log.e("JSON Object",jsonObject+"");
+                            Log.i("JSON Object",jsonObject+"");
                             getDescription[i]=jsonObject.getString("description");
                             getLink[i]=jsonObject.getString("link");
-                            Log.e("JsonParsing",getDescription[i]+","+getLink[i]);
+                            getImageUrl[i]=jsonObject.getString("imageUrl");
+                            Log.i("JsonParsing",getDescription[i]+","+getLink[i]+","+getImageUrl[i]);
                         }
 
                     } catch (JSONException e) {
