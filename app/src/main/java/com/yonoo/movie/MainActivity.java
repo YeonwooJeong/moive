@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,40 +30,17 @@ public class MainActivity extends AppCompatActivity {
     String eventArray ="";
     int start,end,list_cnt;
     ArrayList<String> descriptionKeyList = new ArrayList<>();
-    private ListView listview ;
-    private ListViewAdapter adapter;
+    ListView listview ;
+    ListViewAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
-//        // Adapter 생성
-//        adapter = new ListViewAdapter() ;
-//
-//        // 리스트뷰 참조 및 Adapter달기
-//        listview = (ListView) findViewById(R.id.listview1);
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View v, int position, long id) {
-//                // get item
-//                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-//
-//                String titleStr = item.getTitle() ;
-//                Drawable iconDrawable = item.getIcon() ;
-//
-//                // TODO : use item data.
-//            }
-//        }) ;
 
-
-//        // 첫 번째 아이템 추가.
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_box_black_36dp),
-//                "Box", "Account Box Black 36dp") ;
-//        // 두 번째 아이템 추가.
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black_36dp),
-//                "Circle", "Account Circle Black 36dp") ;
+        ListView listview ;
+        ListViewAdapter adapter;
 
         tv = (TextView)findViewById(R.id.textView1);
         Button b = (Button)findViewById(R.id.button1);
@@ -106,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
                             getLink[i]=jsonObject.getString("link");
                             getImageUrl[i]=jsonObject.getString("imageUrl");
                             Log.i("JsonParsing",getDescription[i]+","+getLink[i]+","+getImageUrl[i]);
+
+
+
+                            // Adapter 생성
+                            adapter = new ListViewAdapter() ;
+                            // 리스트뷰 참조 및 Adapter달기
+                            listview = (ListView) findViewById(R.id.listview1);
+                            adapter.addItem(getDescription[i]) ;
                         }
 
                     } catch (JSONException e) {
@@ -124,8 +110,23 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv.setText(eventArray);
+//                            tv.setText(eventArray);
+                            for(int i=0;i<list_cnt;i++){
+                                listview.setAdapter(adapter);
+                                // 첫 번째 아이템 추가.
+
+                                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView parent, View v, int position, long id) {
+                                        // get item
+                                        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+
+                                        String titleStr = item.getTitle() ;
+                                    }
+                                }) ;
+                            }
                         }
+
                     });
                 } catch (Exception e) {
                     e.printStackTrace();

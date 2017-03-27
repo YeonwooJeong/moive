@@ -1,5 +1,4 @@
 package com.yonoo.movie;
-
 import android.graphics.drawable.Drawable;
 
 public class ListViewItem {
@@ -14,7 +13,6 @@ public class ListViewItem {
         titleStr = title ;
     }
 
-
     public Drawable getIcon() {
         return this.iconDrawable ;
     }
@@ -23,5 +21,6 @@ public class ListViewItem {
     }
 
 }
+
 
 
