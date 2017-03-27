@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -19,7 +22,7 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -28,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     String urlAddress = "http://www.cgv.co.kr/culture-event/event/?menu=2#1";
     Handler handler = new Handler(); // 화면에 그려주기 위한 객체
     String text="";
-    String event="";
-    int start,end;
+    String eventArray ="";
+    int start,end,list_cnt;
     ArrayList<String> descriptionKeyList = new ArrayList<>();
-    Gson gson = new Gson();
+    Event eventJson = new Event();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,32 +62,36 @@ public class MainActivity extends AppCompatActivity {
                     text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
                     start = text.indexOf("var jsonData");
                     end = text.indexOf("$(\".evt");
-                    System.out.println("시작"+start);
-                    System.out.println("끝"+end);
 
-                    event = text.substring(start+16, end-17);
-                    System.out.println("event  "+event);
-                    String jsonData = "{"+"\"jsonData\""+":"+event+"}";
+                    eventArray= text.substring(start+15, end-16);
 
-                    try
-                    {
-                        JSONObject jsonObject = new JSONObject(jsonData);
-                        String descriptionValue = jsonObject.getString("description");
-                        JSONObject descriptionObject = new JSONObject(descriptionValue);
-                        Iterator i = descriptionObject.keys();
-                        while(i.hasNext())
-                        {
-                            String b = i.next().toString();
-                            Log.d("ITPangpang",b);
-                            descriptionKeyList.add(b);
+//                    String jsonData = "{"+"\"jsonData\""+":["+eventList+"]}";
+//                    System.out.println(jsonData);
+                    try {
+                        JSONArray array = new JSONArray(eventArray); //[]
+                        list_cnt=array.length();
+                        System.out.println("list_cnt "+list_cnt);
+
+                        String[] getDescription=new String[list_cnt];
+                        String[] getLink=new String[list_cnt];
+
+                        for(int i=0;i<list_cnt;i++){
+
+                            JSONObject jsonObject=array.getJSONObject(i);
+                            Log.e("JSON Object",jsonObject+"");
+                            getDescription[i]=jsonObject.getString("description");
+                            getLink[i]=jsonObject.getString("link");
+                            Log.e("JsonParsing",getDescription[i]+","+getLink[i]);
                         }
-                    }
-                    catch (JSONException e)
-                    {
+
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    System.out.println(jsonData);
+//                    JsonObject eventJson = new JsonObject(); //{}
+//                    array.add(eventList);
+//                    eventJson.add("event",array);
+//                    System.out.println("eventList "+eventList);
+//                    System.out.println("Json 변환 "+eventJson.toString());
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
                 }
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv.setText(event);
+                            tv.setText(eventArray);
                         }
                     });
                 } catch (Exception e) {
