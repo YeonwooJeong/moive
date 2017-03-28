@@ -1,23 +1,34 @@
 package com.yonoo.movie;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 public class ListViewItem {
-    private Drawable iconDrawable ;
-    private String titleStr ;
+    private Bitmap image ;
+    private String titleStr,link ;
     private String descStr ;
     public static MainActivity main = new MainActivity();
 
-    public void setImage(Drawable icon) {
-        iconDrawable = icon ;
+    public void setLink(String url) {
+
+        link = url ;
+    }
+
+    public void setImage(Bitmap bitmap) {
+
+        image = bitmap ;
     }
     public void setTitle(String title) {
 
         titleStr = title ;
     }
 
-    public Drawable getImage() {
+    public String getLink() {
 
-        return this.iconDrawable ;
+        return this.link ;
+    }
+
+    public Bitmap getImage() {
+
+        return this.image ;
     }
     public String getTitle() {
 

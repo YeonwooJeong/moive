@@ -1,5 +1,7 @@
 package com.yonoo.movie;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("JsonParsing", getDescription[i] + "," + getLink[i] + "," + getImageUrl[i]);
 
                     }
-                    adapter.addItem(getDescription);
+                    adapter.addItem(getDescription,getLink);
                     listview.setAdapter(adapter);
                     // 첫 번째 아이템 추가.
 
@@ -79,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView parent, View v, int position, long id) {
                             // get item
                             ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-
                             String titleStr = item.getTitle();
+
+                            Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.cgv.co.kr/culture-event/event/"+item.getLink().substring(1)));
+                            startActivity(i);
                         }
                     });
                 } catch (JSONException e) {
