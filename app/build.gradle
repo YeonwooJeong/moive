@@ -27,5 +27,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/jsoup-1.10.2.jar')
-    compile files('libs/gson-2.8.0.jar')
 }
