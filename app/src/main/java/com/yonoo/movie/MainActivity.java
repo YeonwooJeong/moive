@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String eventArray = main.event;
+                String eventArray = loadHtml();
                 System.out.println("결과물 : "+eventArray);
                 try {
                     JSONArray array = new JSONArray(eventArray); //[]
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
                 }
-             }
+            }
         });
         t.start(); // 쓰레드 시작
         return main.event;
