@@ -38,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String eventArray = loadHtml();
+                String eventArray = null;
+                try {
+                    eventArray = loadHtml();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("결과물 : "+eventArray);
                 try {
                     JSONArray array = new JSONArray(eventArray); //[]
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     } // end of onCreate
-    String loadHtml() { // 웹에서 html 읽어오기==
+    String loadHtml() throws InterruptedException { // 웹에서 html 읽어오기==
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t.start(); // 쓰레드 시작
+        t.join(); //쓰레드 완료까지 대기
         return main.event;
     }
 
