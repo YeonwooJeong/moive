@@ -1,7 +1,6 @@
 package com.yonoo.movie;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     int start,end,list_cnt;
     ListView listview ;
     ListViewAdapter adapter;
-
+    public static MainActivity main = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String eventArray = loadHtml();
+                String eventArray = main.event;
                 System.out.println("결과물 : "+eventArray);
                 try {
                     JSONArray array = new JSONArray(eventArray); //[]
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     start = text.indexOf("var jsonData");
                     end = text.indexOf("$(\".evt");
 
-                    event= text.substring(start+15, end-16);
+                    main.event= text.substring(start+15, end-16);
 
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
              }
         });
         t.start(); // 쓰레드 시작
-        return event;
+        return main.event;
     }
 
 }
