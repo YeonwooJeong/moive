@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    } // end of onCreate
+    } // end of onCreate/
 
     String loadHtml() throws InterruptedException { // 웹에서 html 읽어오기==
         Thread t = new Thread(new Runnable() {
