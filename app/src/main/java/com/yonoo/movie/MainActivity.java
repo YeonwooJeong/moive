@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
                             String titleStr = item.getTitle();
 
-                            Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.cgv.co.kr/culture-event/event/"+item.getLink().substring(1)));
+                            Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.cgv.co.kr/culture-event/event"+item.getLink().substring(1)));
                             startActivity(i);
                         }
                     });
