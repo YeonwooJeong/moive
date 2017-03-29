@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,6 +24,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
+    private WebView webView;
     // 웹사이트 주소를 저장할 변수
     String text = "";
     String event = "";
@@ -37,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        webView = (WebView)findViewById(R.id.webview);
+        WebSettings webSettings = webView.getSettings();
+        StringBuffer userAgent = new StringBuffer(webSettings.getUserAgentString());
+        webSettings.setUserAgentString(userAgent.toString());
+//        userAgent.append(";" + Android.getDeviceId(MainActivity.this));
+
 
         tv = (TextView) findViewById(R.id.textView1);
         Button b = (Button) findViewById(R.id.button1);
@@ -81,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView parent, View v, int position, long id) {
                             // get item
                             ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-                            String titleStr = item.getTitle();
 
-                            Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.cgv.co.kr/culture-event/event/"+item.getLink().substring(1)));
-                            startActivity(i);
+                            webView.loadUrl(String.valueOf(Uri.parse("http://www.cgv.co.kr/culture-event/event/"+item.getLink().substring(1))));
+//                            Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.cgv.co.kr/culture-event/event/"+item.getLink().substring(1)));
+//                            startActivity(i);
                         }
                     });
                 } catch (JSONException e) {
