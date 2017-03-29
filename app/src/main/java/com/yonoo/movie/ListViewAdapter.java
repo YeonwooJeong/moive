@@ -64,25 +64,20 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String[] title, String[] url) {
-        String[] description = title;
-        String[] link = url;
-        for(int i=0;i<description.length;i++){
-            System.out.println("배열값 : "+description[i]);
+    public void addItem(ArrayList<String> title, ArrayList<String> url) {
+        ArrayList<String> getTitle =title;
+        ArrayList<String> getLink = url;
+        for(int i=0;i<getTitle.size();i++){
+            System.out.println("배열값 : "+getTitle.get(i));
         }
-        System.out.println("description.length : "+description.length);
+        System.out.println("description.length : "+getTitle.size());
 
 
-        for(int i=0;i<description.length;i++){
-            System.out.println("description : "+description[i]);
+        for(int i=0;i<getTitle.size();i++){
             ListViewItem item = new ListViewItem();
-            item.setTitle(description[i]);
-            item.setLink(link[i]);
+            item.setTitle(getTitle.get(i));
+            item.setLink(getLink.get(i));
             listViewItemList.add(item);
         }
     }
 }
-
-
-
-
