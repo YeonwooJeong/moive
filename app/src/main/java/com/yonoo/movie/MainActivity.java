@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -90,10 +89,11 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("subString===:"+item.getLink().substring(start+2,end));
                         String link = item.getLink().substring(start+2,end);
                         if(link.startsWith("./")){
-                            link.replaceFirst(".","");
+                            link = item.getLink().substring(start+3,end);
+//                            link.replaceFirst("\\.","");
                             System.out.println("마지막 주소" +link);
                         }
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr" + link));
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr/WebApp/EventNotiV4" + link));
                         startActivity(i);
                     }
                 });
