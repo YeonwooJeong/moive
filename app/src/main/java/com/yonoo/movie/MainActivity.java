@@ -92,9 +92,12 @@ public class MainActivity extends AppCompatActivity {
                             link = item.getLink().substring(start+3,end);
 //                            link.replaceFirst("\\.","");
                             System.out.println("마지막 주소" +link);
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr/WebApp/EventNotiV4" + link));
+                            startActivity(i);
+                        }else{
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr" + link));
+                            startActivity(i);
                         }
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr/WebApp/EventNotiV4" + link));
-                        startActivity(i);
                     }
                 });
             }
