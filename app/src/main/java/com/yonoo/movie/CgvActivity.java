@@ -91,7 +91,6 @@ public class CgvActivity extends AppCompatActivity {
                         String link = item.getLink().substring(start+2,end);
                         if(link.startsWith("./")){
                             link = link.replaceFirst("\\.","");
-//                            link.replaceFirst("\\.","");
                             System.out.println("마지막 주소" +link);
                             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr/WebApp/EventNotiV4" + link));
                             startActivity(i);
