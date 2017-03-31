@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    main.event = text.substring(start + 15, end - 16);
                     Document doc = Jsoup.connect("http://m.cgv.co.kr/WebApp/EventNotiV4/EventList.aspx?mCode=004&logoIndex=0").get(); //웹에서 내용을 가져온다.
-                    Elements script = doc.select("#evtList");
-                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
+//                    Elements script = doc.select("#evtList");
+//                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
 //                    start = text.indexOf("var jsonData");
 //                    end = text.indexOf("$(\".evt");
 
