@@ -12,7 +12,7 @@
 
 
     <Button
-        android:text="Button"
+        android:text="롯데시네마"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cgv"
@@ -21,7 +21,7 @@
         android:id="@+id/lotte" />
 
     <Button
-        android:text="Button"
+        android:text="CGV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
