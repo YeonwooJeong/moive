@@ -111,26 +111,9 @@ public class CgvActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-//                    Document doc = Jsoup.connect("http://www.cgv.co.kr/culture-event/event/?menu=2#1").get(); //웹에서 내용을 가져온다.
-//                    Element script = doc.select("body").first();
-//                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
-//                    start = text.indexOf("var jsonData");
-//                    end = text.indexOf("$(\".evt");
-//
-//                    main.event = text.substring(start + 15, end - 16);
                     Document doc = Jsoup.connect("http://m.cgv.co.kr/WebApp/EventNotiV4/EventList.aspx?mCode=004&logoIndex=0").get(); //웹에서 내용을 가져온다.
-                    Elements script = doc.select("#evtList");
-                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
-//                    start = text.indexOf("var jsonData");
-//                    end = text.indexOf("$(\".evt");
-
-//                    for(Element e: script){
-//                        System.out.println("script : "+e);
-//                    }
 
                     main.event = doc;
-
-
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
                 }
