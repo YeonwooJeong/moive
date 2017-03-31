@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,7 +18,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class LotteActivity extends AppCompatActivity {
     private TextView tv;
     // 웹사이트 주소를 저장할 변수
     String text = "";
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     int start, end, list_cnt, i;
     ListView listview;
     ListViewAdapter adapter;
-    public static MainActivity main = new MainActivity();
+    public static LotteActivity main = new LotteActivity();
     //    String[] getDescription = null;
 //    String[] getLink = null;
 //    String[] getImageUrl = null;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.cgv);
 
         tv = (TextView) findViewById(R.id.textView1);
         Button b = (Button) findViewById(R.id.button1);
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Elements title = main.event.select("#evtList article a strong.tit");
+                Elements title = main.event.select("#eventList");
 
                 System.out.println("사이즈" + title.size());
                 for (Element e : title) {
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 for (i = 0; i < title.size(); i++)
                     System.out.println(getDescription.get(i));
 
-                Elements href = main.event.select("#evtList article a");
+                Elements href = main.event.select("#eventList li a");
                 for (Element e : href) {
                     getLink.add(e.attr("href"));
 
@@ -90,11 +89,14 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("subString===:"+item.getLink().substring(start+2,end));
                         String link = item.getLink().substring(start+2,end);
                         if(link.startsWith("./")){
-                            link.replaceFirst(".","");
+                            link = link.replaceFirst("\\.","");
                             System.out.println("마지막 주소" +link);
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr/WebApp/EventNotiV4" + link));
+                            startActivity(i);
+                        }else{
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr" + link));
+                            startActivity(i);
                         }
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.cgv.co.kr" + link));
-                        startActivity(i);
                     }
                 });
             }
@@ -115,9 +117,10 @@ public class MainActivity extends AppCompatActivity {
 //                    end = text.indexOf("$(\".evt");
 //
 //                    main.event = text.substring(start + 15, end - 16);
-                    Document doc = Jsoup.connect("http://m.cgv.co.kr/WebApp/EventNotiV4/EventList.aspx?mCode=004&logoIndex=0").get(); //웹에서 내용을 가져온다.
-                    Elements script = doc.select("#evtList");
+                    Document doc = Jsoup.connect("http://event.lottecinema.co.kr/LCMW/Contents/Event/movie-booking-list.aspx").get(); //웹에서 내용을 가져온다.
+                    Elements script = doc.select("#eventList");
                     text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
+                    System.out.println("text ===:"+text);
 //                    start = text.indexOf("var jsonData");
 //                    end = text.indexOf("$(\".evt");
 
