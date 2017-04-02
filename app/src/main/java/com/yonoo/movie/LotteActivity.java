@@ -50,24 +50,23 @@ public class LotteActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Element title = main.event.select("body").first();
-                text = title.html();
-                System.out.println("main.event" + text);
-//                System.out.println("사이즈" + title.size());
-//                for (Element e : title) {
-//                    getDescription.add(e.text());
-//
-//                }
-//                for (i = 0; i < title.size(); i++)
-//                    System.out.println(getDescription.get(i));
-//
-//                Elements href = main.event.select("#eventList li a");
-//                for (Element e : href) {
-//                    getLink.add(e.attr("href"));
-//
-//                }
-//                for (i = 0; i < title.size(); i++)
-//                    System.out.println(getLink.get(i));
+                Elements title = main.event.select("#eventList");
+
+                System.out.println("사이즈" + title.size());
+                for (Element e : title) {
+                    getDescription.add(e.text());
+
+                }
+                for (i = 0; i < title.size(); i++)
+                    System.out.println(getDescription.get(i));
+
+                Elements href = main.event.select("#eventList li a");
+                for (Element e : href) {
+                    getLink.add(e.attr("href"));
+
+                }
+                for (i = 0; i < title.size(); i++)
+                    System.out.println(getLink.get(i));
 
                 // Adapter 생성
                 adapter = new ListViewAdapter();
