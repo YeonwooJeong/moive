@@ -121,6 +121,7 @@ public class CgvActivity extends AppCompatActivity {
         });
         t.start(); // 쓰레드 시작
         t.join(); //쓰레드 완료까지 대기
+
         return main.event;
     }
 
