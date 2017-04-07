@@ -5,7 +5,6 @@ public class ListViewItem {
     private Bitmap image ;
     private String titleStr,link ;
     private String descStr ;
-    public static MainActivity main = new MainActivity();
 
     public void setLink(String url) {
 

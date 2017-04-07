@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class CgvActivity extends AppCompatActivity {
     private TextView tv;
     // 웹사이트 주소를 저장할 변수
     String text = "";
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     int start, end, list_cnt, i;
     ListView listview;
     ListViewAdapter adapter;
-    public static MainActivity main = new MainActivity();
+    public static CgvActivity main = new CgvActivity();
     //    String[] getDescription = null;
 //    String[] getLink = null;
 //    String[] getImageUrl = null;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.cgv);
 
         tv = (TextView) findViewById(R.id.textView1);
         Button b = (Button) findViewById(R.id.button1);
@@ -110,26 +111,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-//                    Document doc = Jsoup.connect("http://www.cgv.co.kr/culture-event/event/?menu=2#1").get(); //웹에서 내용을 가져온다.
-//                    Element script = doc.select("body").first();
-//                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
-//                    start = text.indexOf("var jsonData");
-//                    end = text.indexOf("$(\".evt");
-//
-//                    main.event = text.substring(start + 15, end - 16);
                     Document doc = Jsoup.connect("http://m.cgv.co.kr/WebApp/EventNotiV4/EventList.aspx?mCode=004&logoIndex=0").get(); //웹에서 내용을 가져온다.
-//                    Elements script = doc.select("#evtList");
-//                    text = script.html(); //원하는 부분은 Elements형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
-//                    start = text.indexOf("var jsonData");
-//                    end = text.indexOf("$(\".evt");
-
-//                    for(Element e: script){
-//                        System.out.println("script : "+e);
-//                    }
 
                     main.event = doc;
-
-
                 } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
                     e.printStackTrace();
                 }
@@ -137,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         });
         t.start(); // 쓰레드 시작
         t.join(); //쓰레드 완료까지 대기
+
         return main.event;
     }
 
