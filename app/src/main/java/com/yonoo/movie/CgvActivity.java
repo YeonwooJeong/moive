@@ -71,7 +71,7 @@ public class CgvActivity extends AppCompatActivity {
 
                 // Adapter 생성
                 adapter = new ListViewAdapter();
-                // 리스트뷰 참조 및 Adapter달기
+                // 리스트뷰 참조 및 Adapter달기/
                 listview = (ListView) findViewById(R.id.listview1);
                 adapter.addItem(getDescription, getLink);
                 listview.setAdapter(adapter);
